@@ -20,4 +20,10 @@ console.log(cuadrado(2));
 console.log(cuadrado(5));  
 console.log(cuadrado(10)); 
 
+// ejercicio c)
+// funcion flecha llamda saludo personal y recibe dos parametro nombre y edad 
+const saludoPersonalizado = (nombre, edad) => `Hola, me llamo ${nombre} y tengo ${edad} años.`;
+
+// Probando la función
+console.log(saludoPersonalizado("kevin", 20));
 
