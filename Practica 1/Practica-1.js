@@ -9,3 +9,15 @@ const saludo = `Hola, ${nombre}. Tienes ${edad} años.`;
 
 console.log(saludo);
 
+// ejercicio b)
+
+
+// funcion flecha
+const cuadrado = (numero) => numero * numero;
+
+// Probando con 3 números diferentes
+console.log(cuadrado(2));  
+console.log(cuadrado(5));  
+console.log(cuadrado(10)); 
+
+
