@@ -30,3 +30,26 @@ const nombres = productos
   .map(producto => producto.nombre);          
 
 console.log(nombres); 
+
+//ejercicio c)
+const personas = [
+  { nombre: "Ana", edad: 22 },
+  { nombre: "Luis", edad: 35 },
+  { nombre: "María", edad: 28 }
+];
+
+// 1. Usar .find() para buscar a Luis
+const personaLuis = personas.find(persona => persona.nombre === "Luis");
+console.log("Persona encontrada:", personaLuis); 
+// { nombre: "Luis", edad: 35 }
+
+// 2. Usar .forEach() para imprimir nombre y edad
+personas.forEach(persona => {
+  console.log(`${persona.nombre} tiene ${persona.edad} años`);
+});
+
+// 3. Usar .reduce() para sumar todas las edades
+const totalEdades = personas.reduce((total, persona) => total + persona.edad, 0);
+console.log("Suma total de edades:", totalEdades); 
+
+
