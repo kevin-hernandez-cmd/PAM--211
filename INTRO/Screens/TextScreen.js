@@ -1,56 +1,60 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Alert, StyleSheet } from 'react-native';
+import { Text, StyleSheet, View, Button, Alert,TextInput,Platform} from 'react-native'
+import React, { useState } from 'react'
 
-const TextScreen = () => {
-  const [nombre, setNombre] = useState('');
+export default function TextScreen () {
+const [nombre, setNombre]= useState('');
 
-  const mostrarAlerta = () => {
+const mostrarAlerta = () => {
     if (nombre.trim() === '') {
-      Alert.alert('Error', 'Por favor ingresa tu nombre');
+      if (Platform.OS === 'web') {
+        window.alert('Error: Por favor ingresa tu nombre');
+      } else {
+        Alert.alert('Error', 'Por favor ingresa tu nombre');
+      }
     } else {
-      Alert.alert('Hola!', `Bienvenido, ${nombre}! `);
+      if (Platform.OS === 'web') {
+        window.alert(`¡Hola ${nombre}! Bienvenido `);
+      } else {
+        Alert.alert('Hola!', 'Bienvenido'+{nombre});
+      }
     }
   };
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.titulo}>Practica TextInput & Alert</Text>
+    return (
+      <View style={styles.container}>
+        <Text style={styles.titulo}>TextScreen</Text>
 
       <TextInput
-        style={styles.nombres}
-        placeholder="Escribe tu nombre"
-        value={nombre}
-        onChangeText={setNombre}
-        maxLength={50}
+      style={styles.recuadro}
+      placeholder='Escribe tu nombre'
+      value ={nombre}
+      onChangeText={setNombre}
+      maxLength={50}
       />
 
-      <Button color='blue'  title="Mostrar saludo" onPress={mostrarAlerta} />
-    </View>
-  );
-};
+      <Button color='blue' title='Mostrar saludo' onPress={mostrarAlerta} />
+      </View>
+    );
+  };
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'hsla(209, 73%, 88%, 1.00)',
-    padding: 20, //separa el texto del recuadro
+    backgroundColor: 'white',
+    padding: 20,
+
   },
   titulo: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight:'bold',
     marginBottom: 15,
   },
-
-  nombres: {
-    borderWidth: 1, //Define el grosor del borde del componente
-    borderColor: '#0f0e0eff', //Color del borde
+  recuadro:{
+    borderWidth: 1,
+    borderColor: 'black',
     padding: 10,
-    marginBottom: 20, //Separa este componente del que está debajo de él
+    marginBottom: 20,
   },
-  
 });
-
-
-export default TextScreen;

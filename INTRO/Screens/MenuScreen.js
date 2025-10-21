@@ -44,11 +44,10 @@ export default function MenuScreen() {
            <View style={styles.container_1}>
              <Text>Menu de practicas</Text>
               <View style={styles.botones_1}>
-             <Button color='pink' onPress={()=>setScreens('contador')}title='Pract:contador'></Button>
-            
+             <Button color='pink' onPress={()=>setScreens('contador')}title='Pract:contador'></Button>        
              <Button color='green'onPress={()=>setScreens('botones')}title='Pract:botones'></Button>
              <Button color='orange'onPress={()=>setScreens('text')}title='Pract:texto'></Button>
-             <Button color='gold'onPress={()=>setScreens('imagen')}title='Pract:imagen'></Button>
+             <Button color='gold'onPress={()=>setScreens('imagen')}title='Pract:ImageBackgroung & SlapshScreen'></Button>
              <Button color='purple'onPress={()=>setScreens('scroll')}title='Pract:scroll'></Button>
              <Button  color='blue' onPress={()=>setScreens('indicator')}title='Pract:indicator'></Button>
              <Button  color='gray' onPress={()=>setScreens('Lista')}title='Pract:Lista'></Button>
