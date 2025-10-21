@@ -1,7 +1,8 @@
 import { Text, StyleSheet, View, ImageBackground, Dimensions } from 'react-native'
 import React, { useState, useEffect} from 'react'
 
-const BackgroundImage = require ('../assets/splash-icon.png');
+const BackgroundImage = require ('../assets/Demon.jpg');
+const BackgroundImage2 = require ('../assets/GTR35.jpg');
 export default function ImageScreen({navigation}){
   const[showSplash, setShowSplash]=useState(true);
   useEffect(() => {
@@ -27,9 +28,11 @@ export default function ImageScreen({navigation}){
     );
   }
   return (
+    <ImageBackground source={BackgroundImage2}>
     <View style={styles.mainScreen}>
-      <Text style={styles.mainText}>Bienvenido a la pantalla principal</Text>
+     <Text style={styles.mainText}>Bienvenido a la pantalla principal</Text>
     </View>
+    </ImageBackground>
   );
 }
 
@@ -41,14 +44,13 @@ const {width, height} = Dimensions.get('window');
         },
         overlay: {
             flex: 1,
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
             justifyContent: 'center',
             alignItems: 'center',
             padding: 20,
         },
         tittle: {
             fontSize: 32,
-            color: '#fff',
+            color: 'white',
             fontWeight: 'bold',
             marginBottom: 10,
             textAlign: 'center',
@@ -57,10 +59,12 @@ const {width, height} = Dimensions.get('window');
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#f0f0f0',
+           
         },
         mainText: {
             fontSize: 24,
-            color: '#333',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#ffffffff',
         },
     });
