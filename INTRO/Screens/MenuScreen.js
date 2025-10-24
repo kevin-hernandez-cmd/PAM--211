@@ -8,6 +8,7 @@ import ScrollScreen from './ScrollScreen'
 import ActivityIndicator from './ActivityIndicator'
 import ListScreen from './ListScreen'
 import ModalScreen from './ModalScreen'
+import RepasoScreen from './RepasoScreen'
 
 export default function MenuScreen() {
  const [Screens, setScreens] = useState('menu');
@@ -36,6 +37,9 @@ export default function MenuScreen() {
 
     case 'modal':
         return <ModalScreen/>;
+    
+    case 'repaso1':
+        return <RepasoScreen/>;
 
 
     case 'menu': 
@@ -52,6 +56,7 @@ export default function MenuScreen() {
              <Button  color='blue' onPress={()=>setScreens('indicator')}title='Pract:indicator'></Button>
              <Button  color='gray' onPress={()=>setScreens('Lista')}title='Pract:Lista'></Button>
              <Button  color='violet' onPress={()=>setScreens('modal')}title='Pract:modal'></Button>
+             <Button color='red' onPress={()=>setScreens('repaso1')} title='Repaso 1'></Button>
         </View>
           </View>
     ) 
