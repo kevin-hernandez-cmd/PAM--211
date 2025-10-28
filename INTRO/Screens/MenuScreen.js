@@ -5,7 +5,7 @@ import ContadorScreens from './ContadorScreens'
 import TextScreen from './TextScreen'
 import ImageScreen from './ImageScreen'
 import ScrollScreen from './ScrollScreen'
-import ActivityIndicator from './ActivityIndicator'
+import ActivityScreen from './ActivityScreen'
 import ListScreen from './ListScreen'
 import ModalScreen from './ModalScreen'
 import RepasoScreen from './RepasoScreen'
@@ -30,7 +30,7 @@ export default function MenuScreen() {
         return <ScrollScreen/>;
     
     case 'indicator':
-        return <ActivityIndicator/>;
+        return <ActivityScreen/>;
 
     case 'lista':
         return <ListScreen/>;
@@ -54,7 +54,7 @@ export default function MenuScreen() {
              <Button color='gold'onPress={()=>setScreens('imagen')}title='Pract:ImageBackgroung & SlapshScreen'></Button>
              <Button color='purple'onPress={()=>setScreens('scroll')}title='Pract:scroll'></Button>
              <Button  color='blue' onPress={()=>setScreens('indicator')}title='Pract:indicator'></Button>
-             <Button  color='gray' onPress={()=>setScreens('Lista')}title='Pract:Lista'></Button>
+             <Button  color='gray' onPress={()=>setScreens('lista')}title='Pract:Lista'></Button>
              <Button  color='violet' onPress={()=>setScreens('modal')}title='Pract:modal'></Button>
              <Button color='red' onPress={()=>setScreens('repaso1')} title='Repaso 1'></Button>
         </View>
