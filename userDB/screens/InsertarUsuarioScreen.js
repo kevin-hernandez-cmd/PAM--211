@@ -12,6 +12,11 @@ export default function UsuarioView() {
   const [loading, setLoading] = useState(true);
   const [guardando, setGuardando] = useState(false);
 
+  const [modalVisible, setModalVisible] = useState(false);
+  const [usuarioEditando, setUsuarioEditando] = useState(null);
+  const [nuevoNombre, setNuevoNombre] = useState('');
+  
+
   const cargarUsuarios = useCallback(async () => {
     try {
       setLoading(true);
@@ -41,41 +46,106 @@ export default function UsuarioView() {
   }, [cargarUsuarios]);
 
   const handleAgregar = async () => {
-    if (guardando) return;
+    if (!nombre.trim()) {
+      Alert.alert("Error", "El nombre no puede estar vacío");
+      return;
+    }
 
     try {
-
       setGuardando(true);
-      const usuarioCreado = await controller.crearUsuario(nombre);
-      Alert.alert(`Usuario creado: "${usuarioCreado.nombre}" guardado con ID: ${usuarioCreado.id}`);
-      setNombre('');
+      await controller.crearUsuario(nombre.trim());
+      setNombre("");
     } catch (error) {
-      Alert.alert('Error', error.message);
+      Alert.alert("Error", error.message);
     } finally {
       setGuardando(false);
     }
   };
 
-  const renderUsuario = ({ item, index }) => (
-    <View style={styles.userItem}>
-      <View style={styles.userItemNumber}>
-        <Text style={styles.userNumberText}>{index + 1}</Text>
-      </View>
 
-      <View style={styles.userItemData}>
-        <Text style={styles.userName}>{item.nombre}</Text>
-        <Text style={styles.userId}>ID: {item.id}</Text>
 
-        <Text style={styles.userDate}>
-          {new Date(item.fechaCreacion).toLocaleDateString('es-MX', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          })}
-        </Text>
+const handleEditar = (usuario) => {
+    setUsuarioEditando(usuario);
+    setNuevoNombre(usuario.nombre);
+    setModalVisible(true);
+  };
+
+  const confirmarEdicion = async () => {
+    if (!nuevoNombre.trim()) {
+      Alert.alert("Error", "El nombre no puede estar vacío");
+      return;
+    }
+
+    try {
+      await controller.actualizarUsuario(usuarioEditando.id, nuevoNombre.trim());
+      setModalVisible(false);
+      setUsuarioEditando(null);
+    } catch (error) {
+      Alert.alert("Error", error.message);
+    }
+  };
+
+  const handleEliminar = (id) => {
+    Alert.alert(
+      "Eliminar",
+      "¿Seguro que deseas eliminar este usuario?",
+      [
+        { text: "Cancelar", style: "cancel" },
+        {
+          text: "Eliminar",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await controller.eliminarUsuario(id);
+            } catch (error) {
+              Alert.alert("Error", error.message);
+            }
+          }
+        }
+      ]
+    );
+  };
+
+ const renderUsuario = ({ item, index }) => (
+  <View style={styles.userItem}>
+
+    <View style={styles.userItemNumber}>
+      <Text style={styles.userNumberText}>{index + 1}</Text>
+    </View>
+
+    <View style={styles.userItemData}>
+      <Text style={styles.userName}>{item.nombre}</Text>
+      <Text style={styles.userId}>ID: {item.id}</Text>
+
+      <Text style={styles.userDate}>
+        {new Date(item.fechaCreacion).toLocaleDateString('es-MX', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        })}
+      </Text>
+
+      <View style={styles.userItemButtons}>
+
+        <TouchableOpacity 
+          style={[styles.buttonEE, { backgroundColor: "#006effff" }]} 
+          onPress={() => handleEditar(item)}
+        >
+          <Text style={styles.buttonEEText}>Editar</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.buttonEE, { backgroundColor: "#ff0000ff" }]}
+          onPress={() => handleEliminar(item.id)}
+        >
+          <Text style={styles.buttonEEText}>Eliminar</Text>
+        </TouchableOpacity>
+
       </View>
     </View>
-  );
+
+  </View>
+);
 
   return (
     <View style={styles.container}>
@@ -110,9 +180,37 @@ export default function UsuarioView() {
         renderItem={renderUsuario}
         keyExtractor={(item) => item.id.toString()}
       />
+           {modalVisible && (
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Editar Usuario</Text>
+
+            <TextInput
+              style={styles.input}
+              value={nuevoNombre}
+              onChangeText={setNuevoNombre}
+            />
+
+            <View style={{ flexDirection: "row", gap: 10 }}>
+              <TouchableOpacity style={styles.button} onPress={confirmarEdicion}>
+                <Text style={styles.buttonText}>Guardar</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[styles.button, { backgroundColor: "#aaa" }]}
+                onPress={() => setModalVisible(false)}
+              >
+                <Text style={styles.buttonText}>Cancelar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      )}
+
     </View>
   );
 }
+  
 
 const styles = StyleSheet.create({
   container: {
@@ -184,5 +282,40 @@ const styles = StyleSheet.create({
     marginTop: 4,
     fontSize: 12,
     color: "#666"
+  },
+    buttonEEText: {
+    color: "white",
+    fontWeight: "bold"
+  },
+    buttonEE: {
+    padding: 8,
+    borderRadius: 6
+  },
+ userItemButtons: {
+    flexDirection: "row",
+    gap: 10,
+    marginTop: 8
+ },
+  modalContainer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  modalContent: {
+    backgroundColor: "white",
+    padding: 20,
+    width: "80%",
+    borderRadius: 10
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+    textAlign: "center"
   }
 });
